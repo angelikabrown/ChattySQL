@@ -6,7 +6,10 @@ DB_PATH = "data/sample.db"
 
 def run_query(query: str) -> pd.DataFrame:
     """
+
     Execute a SQL query and return the results as a pandas DataFrame.
+    args: query (str): The SQL query to execute.
+    returns: pd.DataFrame: The results of the query as a DataFrame.
     
     """
     conn = sqlite3.connect(DB_PATH)
