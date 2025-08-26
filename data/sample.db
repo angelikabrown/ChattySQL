@@ -4,10 +4,29 @@ import sqlite3
 conn = sqlite3.connect('data/sample.db')
 c = conn.cursor()
 
-#create the tables
+-- create the product and sales tables    
 
 c.execute("DROP TABLE IF EXISTS products;")
 c.execute("DROP TABLE IF EXISTS sales;")
 
+c. execute(''' 
+CREATE TABLE products (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    category REAL NOT NULL
+);
+''')
+
+c. execute('''
+CREATE TABLE sales (
+    id INTEGER PRIMARY KEY,
+    product_id INTEGER,
+    quantity INTEGER NOT NULL,
+    price REAL,
+    FOREIGN KEY (product_id) REFERENCES products (id)
+);
+''')
+
+-- populate the tables with sample data
 
 
