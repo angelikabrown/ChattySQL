@@ -1,0 +1,13 @@
+import sqlite3
+
+
+conn = sqlite3.connect('data/sample.db')
+c = conn.cursor()
+
+#create the tables
+
+c.execute("DROP TABLE IF EXISTS products;")
+c.execute("DROP TABLE IF EXISTS sales;")
+
+
+
