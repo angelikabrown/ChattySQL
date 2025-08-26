@@ -1,5 +1,6 @@
 import sqlite3
 
+--create the database connection and cursor
 
 conn = sqlite3.connect('data/sample.db')
 c = conn.cursor()
