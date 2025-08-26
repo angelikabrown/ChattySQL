@@ -1,35 +1,32 @@
+# init_db.py
 import sqlite3
 
---create the database connection and cursor
+conn = sqlite3.connect("data/sample.db")
+cursor = conn.cursor()
 
-conn = sqlite3.connect('data/sample.db')
-c = conn.cursor()
+# Create tables
+cursor.execute("DROP TABLE IF EXISTS products;")
+cursor.execute("DROP TABLE IF EXISTS sales;")
 
--- create the product and sales tables    
-
-c.execute("DROP TABLE IF EXISTS products;")
-c.execute("DROP TABLE IF EXISTS sales;")
-
-c. execute(''' 
+cursor.execute("""
 CREATE TABLE products (
     id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    category REAL NOT NULL
+    name TEXT,
+    category TEXT
 );
-''')
+""")
 
-c. execute('''
+cursor.execute("""
 CREATE TABLE sales (
     id INTEGER PRIMARY KEY,
     product_id INTEGER,
-    quantity INTEGER NOT NULL,
+    quantity INTEGER,
     price REAL,
-    FOREIGN KEY (product_id) REFERENCES products (id)
+    FOREIGN KEY(product_id) REFERENCES products(id)
 );
-''')
+""")
 
--- populate the tables with sample data
-
+# Insert sample data
 cursor.executemany("INSERT INTO products (name, category) VALUES (?, ?);", [
     ("Laptop", "Electronics"),
     ("Phone", "Electronics"),
@@ -46,7 +43,5 @@ cursor.executemany("INSERT INTO sales (product_id, quantity, price) VALUES (?, ?
     (5, 50, 4.99),
 ])
 
-
--- commit the changes and close the connection
 conn.commit()
 conn.close()
