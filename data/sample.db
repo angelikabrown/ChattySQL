@@ -29,4 +29,23 @@ CREATE TABLE sales (
 
 -- populate the tables with sample data
 
+cursor.executemany("INSERT INTO products (name, category) VALUES (?, ?);", [
+    ("Laptop", "Electronics"),
+    ("Phone", "Electronics"),
+    ("Desk Chair", "Furniture"),
+    ("Pen", "Stationery"),
+    ("Notebook", "Stationery"),
+])
 
+cursor.executemany("INSERT INTO sales (product_id, quantity, price) VALUES (?, ?, ?);", [
+    (1, 10, 999.99),
+    (2, 25, 599.99),
+    (3, 5, 199.99),
+    (4, 100, 1.99),
+    (5, 50, 4.99),
+])
+
+
+-- commit the changes and close the connection
+conn.commit()
+conn.close()
