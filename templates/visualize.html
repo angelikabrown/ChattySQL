@@ -1,0 +1,6 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<h2>{{ chart_type|capitalize }} Chart</h2>
+<img src="data:image/png;base64,{{ chart }}" />
+{% endblock %}
