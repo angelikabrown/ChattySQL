@@ -1,0 +1,40 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<h2>Question:</h2>
+<p>{{ question }}</p>
+
+<h2>Generated SQL:</h2>
+<pre>{{ sql }}</pre>
+
+<h2>Results:</h2>
+{% if results is string %}
+  <p style="color:red;">Error: {{ results }}</p>
+{% else %}
+  <table border="1">
+    <tr>
+      {% for col in results.columns %}
+        <th>{{ col }}</th>
+      {% endfor %}
+    </tr>
+    {% for row in results.itertuples(index=False) %}
+    <tr>
+      {% for val in row %}
+        <td>{{ val }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+{% endif %}
+
+<form action="/visualize" method="POST">
+  <input type="hidden" name="sql" value="{{ sql }}">
+  <label>Choose chart type:</label>
+  <select name="chart_type">
+    <option value="bar">Bar</option>
+    <option value="line">Line</option>
+    <option value="pie">Pie</option>
+  </select>
+  <button type="submit">Visualize</button>
+</form>
+{% endblock %}
