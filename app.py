@@ -31,19 +31,26 @@ def index():
 @app.route("/visualize", methods=["POST"])
 def visualize():
     """
-    
+
     Visualization page where users can create charts based on SQL query results.
 
     """
-    sql = request.form["sql"]
-    chart_type = request.form.get("chart_type")  
+    sql = request.form.get("sql", "").strip()
+    chart_type = request.form.get("chart_type", "bar").strip().lower()
+
+    allowed_chart_types = ["bar", "line", "pie", "scatter"]
+    if chart_type not in allowed_chart_types:
+        chart_type = "bar"  
 
     # Execute the SQL query and get results
     results = run_query(sql)    
     if isinstance(results, str): # Error handling
-        return f"Error: {results}"
+        return render_template("results.html", question="(visualization step)", sql=sql, results=results)
     
     img = plot_chart(results, chart_type)
+    if not img:
+        #error handling
+        return render_template("vizualize.html", chart=None, chart_type=chart_type, error="Could not generate chart.")
     return render_template("visualize.html", chart=img, chart_type=chart_type)
 
 
