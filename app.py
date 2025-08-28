@@ -8,6 +8,11 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """
+    
+    Main page where users ask their natural language questions, receive SQL queries, and view results.
+
+    """
     if request.method == "POST":
         question = request.form["question"]
 
@@ -25,6 +30,11 @@ def index():
 
 @app.route("/visualize", methods=["POST"])
 def visualize():
+    """
+    
+    Visualization page where users can create charts based on SQL query results.
+
+    """
     sql = request.form["sql"]
     chart_type = request.form.get("chart_type")  
 
